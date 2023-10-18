@@ -47,12 +47,6 @@ $$
 
 También tenga en cuenta que ${n \choose a, b, c}$ es el coeficiente multinomial. 
 
-Una pequeña variante e:
-
-$$
-\varphi_i(v) = \sum_{S \subseteq N \setminus \{i\}} \frac{|S|!(|N| - |S| - 1)!}{|N|!} \left[v(S \cup \{i\}) - v(S)\right]
-$$
-
 Aquí, los términos clave son:
 
 - $\varphi_i(v)$: Es el Shapley value del jugador $i$ en el juego representado por la función de valor $v$.
@@ -61,7 +55,7 @@ Aquí, los términos clave son:
 
 - $S \subseteq N \setminus \{i\}$: $S$ es una coalición que no contiene al jugador $i$ [^1].
 
-- $|S|$: Representa el número de jugadores en la coalición $S$.
+- $|S|$ o $s$: Representa el número de jugadores en la coalición $S$.
 
 - $|N|$ ó $n$: Es el número total de jugadores (características).
 
@@ -69,7 +63,7 @@ Aquí, los términos clave son:
 
 - $v(S)$: Es el valor de la función $v$ cuando solo consideramos la coalición $S$.
 
-Esta fórmula puede parecer compleja, pero es esencialmente una suma ponderada de las diferencias en la contribución de la característica $i$ cuando se agrega a diferentes coaliciones. El término $\frac{|S|!(|N| - |S| - 1)!}{|N|!}$ representa la ponderación de las diferentes permutaciones posibles de las coaliciones.
+Esta fórmula puede parecer compleja, pero es esencialmente una suma ponderada de las diferencias en la contribución de la característica $i$ cuando se agrega a diferentes coaliciones. El término $\frac{s!(n - s - 1)!}{n!}$ representa la ponderación de las diferentes permutaciones posibles de las coaliciones.
 
 Una fórmula equivalente alternativa para el valor de Shapley es:
 
@@ -83,7 +77,7 @@ donde la suma recorre todos los órdenes posibles de $n!$ jugadores $R$ y $P_i^R
 Finalmente, también se puede expresar como
 
 $$
-\varphi _{i}(v)={\frac {1}{n}}\sum _{S\subseteq N\setminus \{i\}}{\binom {n-1}{|S|}}^{-1}(v(S\cup \{i\})-v(S))
+\varphi _{i}(v)={\frac {1}{n}}\sum _{S\subseteq N\setminus \{i\}}{\binom {n-1}{s}}^{-1}(v(S\cup \{i\})-v(S))
 $$
 
 
@@ -159,7 +153,7 @@ utilizando el principio de inclusión-exclusión. En otras palabras, la sinergia
 Los valores de Shapley se dan en términos de la función sinergia por
 
 $$
-\varphi_i(v) = \sum_{i \in S \subseteq N } \frac{w(S)}{|S|}
+\varphi_i(v) = \sum_{i \in S \subseteq N } \frac{w(S)}{s}
 $$
 
 donde la suma es sobre todos los subconjuntos $S$ de $N$ que incluyen al jugador $i$.
@@ -172,57 +166,35 @@ $$
 
 En otras palabras, la sinergia de cada coalición se divide por igual entre todos los miembros.
 
----
-
-La sinergia $w$ se define como la contribución de una coalición $S$ al juego, sin contar la contribución de los subconjuntos de $S$.
-
-En otras palabras, el valor $w(S)$ es el valor que se agregaría al juego si solo se consideraran las coaliciones que incluyen a todos los miembros de $S$.
-
-Formalmente, la sinergia se define de la siguiente manera:
-
-$$
-w(S) = \sum_{R \subseteq S } (-1)^{|S| - |R|}  v(R)
-$$
-
-donde $S$ es una coalición, $R$ es un subconjunto de $S$, y $v(R)$ es el valor de la coalición $R$.
-
-Por ejemplo, si $N = \{A, B, C\}$ y $S = \{A, B\}$, entonces los subconjuntos de $S$ son:
-
-* $\emptyset$
-* $\{A\}$
-* $\{B\}$
-* $\{A, B\}$
-
-La sinergia de la coalición $\{A, B\}$ es $w(\{A, B\}) = \sum_{R \subseteq \{A, B\} } (-1)^{|\{A, B\}| - |R|}  v(R) = 20 - 10 - 10 - 0 = 10$.
-
-Este valor representa la contribución de la coalición $\{A, B\}$ al juego, sin contar la contribución de las coaliciones $\{A\}$, $\{B\}$, y $\emptyset$.
-
-La sinergia se puede interpretar como una medida de la ventaja que tiene una coalición sobre sus subconjuntos. Una coalición con una sinergia alta es una coalición que es más valiosa que sus subconjuntos.
-
-La sinergia también se puede utilizar para calcular el valor de Shapley de un jugador. El valor de Shapley de un jugador $i$ es la suma de la sinergia de todas las coaliciones que contienen a $i$, dividida por el número de jugadores en el juego.
-
-Formalmente, el valor de Shapley se define de la siguiente manera:
-
-$$
-\phi_i(v) = \sum_{S \subseteq N \setminus \{i\}} \frac{w(S)}{|S|}
-$$
-
-donde $i$ es un jugador, $S$ es una coalición, $w(S)$ es la sinergia de la coalición $S$, y $|S|$ es el número de miembros de la coalición $S$.
-
 ## Dividendos Harsanyi
 
 John Charles Harsanyi, en colaboración con John Forbes Nash and Reinhard Selten, propusieron en 1959 [^6] la formula alternativa:
 $$
-\varphi_i(v) = \sum_{S \subseteq N \setminus \{i\} }{\frac{\Delta_v(S \bigcup\{i\})}{s+1}}, \forall i \in N
+\varphi_i(v) = \sum_{i \in S \subseteq N }{\frac{d_v(S)}{s}}
 $$
 
-donde $\Delta_v(T)$ son los llamados **dividendos Harsanyi** $\Delta_v \colon \mathcal{P}(N) \to \mathbb{R}$ el cual se define como:
+donde $d_v(T)$ son los llamados **dividendos Harsanyi** $d_v \colon \mathcal{P}(N) \to \mathbb{R}$ el cual se define como[^7]:
+
 
 $$
-\Delta_v(T) = \sum_{R \subseteq S }{(-1)^{|T| - |R|}  v(R)}. \forall T \subseteq N
+\begin{aligned}
+d_{v}(\{i\})&=v(\{i\})\\
+d_{v}(\{i,j\})&=v(\{i,j\})-d_{v}(\{i\})-d_{v}(\{j\})\\
+d_{v}(\{i,j,k\})&=v(\{i,j,k\})-d_{v}(\{i,j\})-d_{v}(\{i,k\})-d_{v}(\{j,k\})-d_{v}(\{i\})-d_{v}(\{j\})-d_{v}(\{k\})\\
+&\vdots \\d_{v}(S)&=v(S)-\sum _{T\subsetneq S}d_{v}(T)
+\end{aligned}
 $$
 
+El dividendo Harasanyi identifica el excedente que se crea por una coalición de jugadores en un juego cooperativo. Para especificar este superávit, el valor de esta coalición se corrige por el superávit que ya crean las subcoaliciones.
 
+
+Una formula explicita para $d_v(T)$ es:
+
+$$
+d_v(T) = \sum_{T \subseteq S }{(-1)^{|S| - |T|}  v(T)}
+$$
+
+**Nota:** Los dividendos de Harsanyi pueden encontrarse en algunas literaturas como **sinergia**.
 
 ## Resumen de términos clave
 
@@ -473,4 +445,8 @@ Estos son los valores de Shapley para cada jugador en este ejemplo particular. I
 
 [^4]: L. S. Shapley, “A value for n-persons games in Contributions to the Theory of Games II,” Annals of Mathematics Studies, no. 28, pp. 307–317, 1953. 
 
+[5^]: Handbook of the Shapley Value. (2019). United Kingdom: CRC Press. Retrived from: <http://rguir.inflibnet.ac.in/bitstream/123456789/16159/1/Handbook%20of%20the%20Shapley%20Value.pdf>
+
 [^6]: Harsanyi, J.C. (1959) A bargaining model for cooperative n-person games. In: Tucker, A.W., Luce, R.D. (eds) Contributions to the theory of games IV. Princenton University Press, Princenton, pp. 325-355
+
+[^7]: Grabisch, M. (2016). Set Functions, Games and Capacities in Decision Making. Germany: Springer International Publishing.
