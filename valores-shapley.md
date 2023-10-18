@@ -1,34 +1,61 @@
 # Valor de Shapley
 
-## Juego cooperativo
-Formalmente, un **juego cooperativo** se define como: Hay un conjunto $N$ (de $n$ jugadores) y una función $v$ que mapea subconjuntos de jugadores a los números reales: $v \colon 2^N \to \mathbb{R}$, con $v (\emptyset ) = 0$, donde $\emptyset$ denota el conjunto vacío. 
+## Juegos cooperativos TU
 
-## Función caractterística
-La función $v$ se llama función característica. La función $v$ tiene el siguiente significado: si $S$ es una coalición de jugadores, entonces $v(S)$, llamado el valor de la **coalición** $S$, describe la suma total esperada de pagos que los miembros de $S$ pueden obtener mediante la cooperación.
+Un juego se puede pensar como una secuencia de movimientos. En cada uno de ellos, uno de los jugadores decide su actuación entre distintas posibilidades. Al final del juego se asigna un pago a los jugadores que depende de las decisiones que todos ellos hayan tomado. Podemos, por tanto, describir un juego como una función que asigna un pago a cada "posición final" posible en el mismo. En el caso de los juegos **utilidad transferible** o **TU** por sus siglas en ingles, se pueden formar grupos de jugadores (que denominaremos **coaliciones**) que fuercen determinados repartos. Así pues, un juego TU puede ser definido mediante una función que asigna a cada coalición
+posible un número real que indica el pago asociado a dicha coalición[^2].
 
+> Un juego TU es un par $(N, v)$ donde $N$ es el conjunto finito de jugadores y $v : \mathcal{P}(N) \to \mathbb{R}$ es una función que cumple que $v(∅) = 0$.
+
+Un juegos TU también es conocido como un **juego cooperativo** o **juego de coalición**.
+
+Uno de los principales problemas que plantea la teoría de juegos cooperativos TU es cómo repartir la ganancia total $v(N)$ entre todos los jugadores de manera equitativa y acorde con la participación individual de cada jugador. Una de las técnicas más utilizadas para dar solución a este problema
+es el valor de Shapley[^3].
+
+## Función característica
+
+La función $v$ se llama función característica. La función $v$ tiene el siguiente significado: si $S$ es una coalición de jugadores, entonces $v(S)$, llamado el **valor de la coalición** $S$, describe la suma total esperada de pagos que los miembros de $S$ pueden obtener mediante la cooperación.
+
+> La función característica $v$ de un juego TU es una función $v : \mathcal{P}(N)  \to \mathbb{R}$ que cumple que $v(∅) = 0$.
+
+Su dominio es el conjunto de partes de $N$, es decir, conjunto de todos los subconjuntos de $N$, que denotamos por $\mathcal{P}(N)$ ó $2^N$. Dada una coalición $S ⊂ N$, $v(S)$
+representa el pago asegurado por los jugadores de $S$, independientemente de las estrategias del resto de jugadores. Se denotará por $G(N)$ el conjunto de todos los **juegos TU**
+con conjunto de jugadores $N$, y por $n$ la cardinalidad de $N$. Por simplicidad, en general identificaremos $(N, v)$ con su función característica $v$.
+
+## Coalición
+
+Se denomina Coalición a cualquier subconjunto no vacío de $N$. Para cada coalición $S ⊂ N$ está asociado un número $v(S)$ el cual representa el pago que se puede asegurar a los jugadores que forman parte de $S$, independientemente de lo que hagan los demás jugadores. El **valor de una coalición** se puede considerar como la cantidad mínima que puede obtener una coalición si todos los jugadores que forman parte de ella se asocian y juegan en equipo.
 
 ## Valor de Shapley
+
 El valor de Shapley es una forma de distribuir las ganancias totales a los jugadores, suponiendo que todos colaboran. Es una distribución "justa" en el sentido de que es la única distribución con ciertas propiedades deseables que se enumeran a continuación. 
 
-Según el valor de Shapley, la cantidad que se le da al jugador $i$ en un juego cooperativo $( v, N)$ es:
+Shapley, analizó durante mucho tiempo los juegos cooperativos y en 1953 propuso el concepto de valor de un juego $(N, v)$ dado para cada jugador $i ∈ N$ a través de la siguiente expresión [^4]: 
 
-$$\varphi_i(v)=\sum_{S \subseteq N \setminus
-\{i\}} \frac{|S|!\; (n-|S|-1)!}{n!}(v(S\cup\{i\})-v(S))$$
+$$
+\varphi_i(N,v)=\sum_{S \subseteq N \setminus
+\{i\}} \frac{s!\;(n-s-1)!}{n!}(v(S\cup\{i\})-v(S))
+$$
 
-$$\quad \quad \quad = \sum_{S \subseteq N \setminus
-\{i\}} {n \choose 1, |S|, n - |S| - 1}^{-1} (v(S\cup\{i\})-v(S))$$
 
-donde $n$ es el número total de jugadores y la suma se extiende sobre todos los subconjuntos $S$ de $N$ que no contienen al jugador $i$. También tenga en cuenta que ${n \choose a, b, c}$ es el coeficiente multinomial. 
+donde $n$ es el número total de jugadores $N$, $s$ es el numero de jugadores en la coalición $S$ y la suma se extiende sobre todos los subconjuntos $S$ de $N$ que no contienen al jugador $i$. 
+
+$$
+\varphi_i(N,v)= \sum_{S \subseteq N \setminus
+\{i\}} {n \choose 1, s, n - s - 1}^{-1} (v(S\cup\{i\})-v(S))
+$$
+
+También tenga en cuenta que ${n \choose a, b, c}$ es el coeficiente multinomial. 
 
 Una pequeña variante e:
 
 $$
-\phi_i(v) = \sum_{S \subseteq N \setminus \{i\}} \frac{|S|!(|N| - |S| - 1)!}{|N|!} \left[v(S \cup \{i\}) - v(S)\right]
+\varphi_i(v) = \sum_{S \subseteq N \setminus \{i\}} \frac{|S|!(|N| - |S| - 1)!}{|N|!} \left[v(S \cup \{i\}) - v(S)\right]
 $$
 
 Aquí, los términos clave son:
 
-- $\phi_i(v)$: Es el Shapley value del jugador $i$ en el juego representado por la función de valor $v$.
+- $\varphi_i(v)$: Es el Shapley value del jugador $i$ en el juego representado por la función de valor $v$.
 
 - $N$: Es el conjunto de todos los jugadores (en nuestro caso, todas las características).
 
@@ -66,25 +93,58 @@ $$
 \varphi _{i}(v)={\frac {1}{\text{número de jugadores}}}\sum _{{\text{coalitions incluyendo }}i}{\frac {{\text{contribución marginal de }}i{\text{ a la coalición}}}{{\text{número de coaliciones excluyendo }}i{\text{ de este tamaño}}}}
 $$
 
+## Contribución marginal
+
+El valor de Shapley, puede interpretarse como la
+contribución marginal esperada del jugador $i$ o como un promedio de las contribuciones marginales $[v(S) − v(S − i)]$ de dicho jugador a todas las coaliciones no vacías 
+$S ∈ \mathcal{P}(N)$, considerando que la coalición del jugador sea
+equiprobable en tamaño $(1 ≤ s ≤ n)$ y que todas las coaliciones de tamaño $S$ tienen la misma probabilidad.
+
+## Propiedades del valor de Shapley
+
+El valor de Shapley tiene las siguientes propiedades deseables:
+
+**1. Eficiencia**: La ganancia total se distribuye:
+$$
+\sum_{i\in N}\varphi _i(v) = v(N)
+$$
+
+**2. Simetría**: si i y j son dos actores que son equivalentes en el sentido de que:
+$$
+v(S\cup\{i\}) = v(S\cup\{j\})
+$$
+para cada subconjunto $S$ de $N$ que no contiene $i$ ni $j$, entonces $\varphi _i(v) = \varphi _j(v)$.
+
+**3. Linealidad**: Si dos juegos cooperativos descritos por las
+funciones de ganancia $v$ y $w$ son combinados, entonces la ganancia distribuida debería corresponder a la ganancia derivada de $v$ y $w$:
+
+$$
+\varphi _i(v+w) = \varphi _i(v) + \varphi _i(w)
+$$
+
+por cada $i$ en $N$.
+
+También, por cada número real $a$:
+
+$$
+\varphi _i(a v) = a \varphi _i(v)
+$$ 
+
+por cada $i$ en $N$.
+
+**4. Zero Player** (Jugador Nulo): El valor de Shapley $\varphi _i(v)$ de un jugador nulo $i$ en un juego v es cero. Un jugador $i$ es nulo en v si $v$ if $v(S\cup \{i\}) = v(S)$ para todas las coaliciones $S$.
+
+De hecho, dado un conjunto de $N$ jugadores, el valor de Shapley es el único mapa a partir del conjunto de todos los juegos de vectores de ganancias que satisface todas las cuatro propiedades aquí mencionadas.
+
 ## En términos de sinergia
 
-A partir de la **función característica** $v$, se puede calcular la *sinergia* que proporciona cada grupo de jugadores. La sinergia es la función única $w \colon 2^N \to \mathbb{R}$, tal que
+A partir de la **función característica** $v$, se puede calcular la *sinergia* que proporciona cada grupo de jugadores. La sinergia es la función única $w \colon \mathcal{P}(N) \to \mathbb{R}$, tal que
 
 $$
 v(S) = \sum_{R \subseteq S } w(R)
 $$
 
 para cualquier subconjunto $S \subseteq N$ de jugadores. En otras palabras, el \'valor total\' de la coalición $S$ proviene de sumar las *sinergias* de cada subconjunto posible de $S$. $R$ es un grupo de jugadores que están contenidos en el grupo de jugadores $S$. Esto significa que el valor de la **función característica** de la coalición $S$ es igual a la suma de las sinergias de todos los subconjuntos posibles de $S$.
-
-Por ejemplo, si tenemos un juego con tres jugadores, $N=\{A, B, C\}$, y la función característica del juego es $v$, entonces el valor de la coalición $S=\{A, B, C\}$, es igual a la suma de las sinergias de los siguientes subconjuntos:
-
-* {A}
-* {B}
-* {C}
-* {A, B}
-* {A, C}
-* {B, C}
-* {A, B, C}
 
 La fórmula del valor de Shapley utiliza la función sinergia para calcular la contribución promedio de cada jugador a la sinergia de todas las coaliciones de las que es miembro.
 
@@ -112,7 +172,55 @@ $$
 
 En otras palabras, la sinergia de cada coalición se divide por igual entre todos los miembros.
 
+---
 
+La sinergia $w$ se define como la contribución de una coalición $S$ al juego, sin contar la contribución de los subconjuntos de $S$.
+
+En otras palabras, el valor $w(S)$ es el valor que se agregaría al juego si solo se consideraran las coaliciones que incluyen a todos los miembros de $S$.
+
+Formalmente, la sinergia se define de la siguiente manera:
+
+$$
+w(S) = \sum_{R \subseteq S } (-1)^{|S| - |R|}  v(R)
+$$
+
+donde $S$ es una coalición, $R$ es un subconjunto de $S$, y $v(R)$ es el valor de la coalición $R$.
+
+Por ejemplo, si $N = \{A, B, C\}$ y $S = \{A, B\}$, entonces los subconjuntos de $S$ son:
+
+* $\emptyset$
+* $\{A\}$
+* $\{B\}$
+* $\{A, B\}$
+
+La sinergia de la coalición $\{A, B\}$ es $w(\{A, B\}) = \sum_{R \subseteq \{A, B\} } (-1)^{|\{A, B\}| - |R|}  v(R) = 20 - 10 - 10 - 0 = 10$.
+
+Este valor representa la contribución de la coalición $\{A, B\}$ al juego, sin contar la contribución de las coaliciones $\{A\}$, $\{B\}$, y $\emptyset$.
+
+La sinergia se puede interpretar como una medida de la ventaja que tiene una coalición sobre sus subconjuntos. Una coalición con una sinergia alta es una coalición que es más valiosa que sus subconjuntos.
+
+La sinergia también se puede utilizar para calcular el valor de Shapley de un jugador. El valor de Shapley de un jugador $i$ es la suma de la sinergia de todas las coaliciones que contienen a $i$, dividida por el número de jugadores en el juego.
+
+Formalmente, el valor de Shapley se define de la siguiente manera:
+
+$$
+\phi_i(v) = \sum_{S \subseteq N \setminus \{i\}} \frac{w(S)}{|S|}
+$$
+
+donde $i$ es un jugador, $S$ es una coalición, $w(S)$ es la sinergia de la coalición $S$, y $|S|$ es el número de miembros de la coalición $S$.
+
+## Dividendos Harsanyi
+
+John Charles Harsanyi, en colaboración con John Forbes Nash and Reinhard Selten, propusieron en 1959 [^6] la formula alternativa:
+$$
+\varphi_i(v) = \sum_{S \subseteq N \setminus \{i\} }{\frac{\Delta_v(S \bigcup\{i\})}{s+1}}, \forall i \in N
+$$
+
+donde $\Delta_v(T)$ son los llamados **dividendos Harsanyi** $\Delta_v \colon \mathcal{P}(N) \to \mathbb{R}$ el cual se define como:
+
+$$
+\Delta_v(T) = \sum_{R \subseteq S }{(-1)^{|T| - |R|}  v(R)}. \forall T \subseteq N
+$$
 
 
 
@@ -124,6 +232,47 @@ En otras palabras, la sinergia de cada coalición se divide por igual entre todo
 * **Sinergia**: La contribución de una coalición a la función de valor.
 
 ## Ejemplos
+
+### Ejemplo simple
+
+Consideremos el siguiente juego $(N,v)$ de dos jugadores:
+
+$$
+N = \{A, B\}
+$$
+
+$$
+\begin{align*}
+v(\{A\}) &= 10 \\
+v(\{B\}) &= 10 \\
+v(\{A, B\}) &= 20 \\
+\end{align*}
+$$
+
+En este juego, el valor total del juego es $v(N) = 20$.
+
+El valor de Shapley de $A$ es:
+
+$$
+\begin{align*}
+\varphi_A(v) &= \frac{1}{2} \left( v(\{A\}) - v(\emptyset) \right) + \frac{1}{2} \left( v(\{A, B\}) - v(\{A\}) \right) \\
+&= \frac{1}{2} \left( 10 - 0 \right) + \frac{1}{2} \left( 20 - 10 \right)\\
+&= 8
+\end{align*}
+$$
+
+El valor de Shapley de $B$ es:
+
+$$
+\begin{align*}
+\varphi_B(v) &= \frac{1}{2} \left( v(\{B\}) - v(\emptyset) \right) + \frac{1}{2} \left( v(\{A, B\}) - v(\{B\}) \right) \\
+&= \frac{1}{2} \left( 10 - 0 \right) + \frac{1}{2} \left( 20 - 10 \right) \\
+&= 8
+\end{align*}
+$$
+
+Por lo tanto, los jugadores $A$ y $B$ recibirán cada uno un pago de $8$.
+
 
 ### Ejempĺo del juego de los guantes
 
@@ -147,7 +296,7 @@ $$
 La fórmula para calcular el valor de Shapley es
 
 $$
-\varphi _{i}(v)={\frac {1}{|N|!}}\sum _{R}\left[v(P_{i}^{R}\cup \left\{i\right\})-v(P_{i}^{R})\right]
+\varphi _{i}(v)={\frac {1}{n!}}\sum _{R}\left[v(P_{i}^{R}\cup \left\{i\right\})-v(P_{i}^{R})\right]
 $$
 
 donde $R$ es un ordenamiento de los jugadores y $P_i^R$ es el conjunto de jugadores en $N$ que preceden (estan antes) a $i$ en el orden $R$.
@@ -307,8 +456,21 @@ $$
 \end{align*}
 $$
 
-Estos son los valores de Shapley para cada jugador en este ejemplo particular. Indican cuánto contribuye cada jugador al juego cooperativo promediando sobre todas las posibles coaliciones. Ten en cuenta que este es un ejemplo simple y los valores de Shapley pueden variar según la función de valor y la estructura del juego.
+Estos son los valores de Shapley para cada jugador en este ejemplo particular. Indican cuánto contribuye cada jugador al juego cooperativo promediando sobre todas las posibles coaliciones. Ten en cuenta que este es un ejemplo simple y los valores de Shapley pueden variar según la función de valor y la estructura del juego.[^1]
+
+## Enlaces de interés
+
+* 5.9 Valores de Shapley https://fedefliguer.github.io/AAI/shapley.html
+
 
 # Referencias
 
-[^1]: https://es.wikipedia.org/wiki/Diferencia_de_conjuntos
+[^1]: Colaboradores de los proyectos Wikimedia. (2022, March 04). Diferencia de conjuntos - Wikipedia, la enciclopedia libre. Retrieved from <https://es.wikipedia.org/w/index.php?title=Diferencia_de_conjuntos>
+
+[^2]: Bamio Martínez, D. (2023). El valor de Shapley. Trabajo Fin de Grao, Universidad de Santiago de Compostela. [En línea]. Disponible en: <https://minerva.usc.es/xmlui/bitstream/handle/10347/26022/Bamio%20Mart%C3%ADnez,%20David.pdf>
+
+[^3]: Vesga Ferreira, J. C., Granados Acuña, G., & Sierra Carrillo, J. E. (2015). El valor de shapley como estrategia de optimización de recursos sobre Power Line Communication (PLC). Disponible en: <http://www.scielo.org.co/pdf/ince/v11n22/v11n22a09.pdf>
+
+[^4]: L. S. Shapley, “A value for n-persons games in Contributions to the Theory of Games II,” Annals of Mathematics Studies, no. 28, pp. 307–317, 1953. 
+
+[^6]: Harsanyi, J.C. (1959) A bargaining model for cooperative n-person games. In: Tucker, A.W., Luce, R.D. (eds) Contributions to the theory of games IV. Princenton University Press, Princenton, pp. 325-355
