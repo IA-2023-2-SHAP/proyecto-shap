@@ -24,7 +24,8 @@ con conjunto de jugadores $N$, y por $n$ la cardinalidad de $N$. Por simplicidad
 
 ## Coalición
 
-Se denomina Coalición a cualquier subconjunto no vacío de $N$. Para cada coalición $S ⊂ N$ está asociado un número $v(S)$ el cual representa el pago que se puede asegurar a los jugadores que forman parte de $S$, independientemente de lo que hagan los demás jugadores. El **valor de una coalición** se puede considerar como la cantidad mínima que puede obtener una coalición si todos los jugadores que forman parte de ella se asocian y juegan en equipo.
+Se denomina **Coalición** a cualquier subconjunto no vacío de $N$. Para cada coalición $S ⊂ N$ está asociado un número $v(S)$ el cual representa el pago que se puede asegurar a los jugadores que forman parte de $S$, independientemente de lo que hagan los demás jugadores. El **valor de una coalición** se puede considerar como la cantidad mínima que puede obtener una coalición si todos los jugadores que forman parte de ella se asocian y juegan en equipo. En el caso de la fórmula de Shapley se denomina **Coalición** a cualquier subconjunto no vacío de $N \setminus \{i\}$, es decir, a cualquier subconjunto de jugadores que no contenga al jugador $i$.
+
 
 ## Valor de Shapley
 

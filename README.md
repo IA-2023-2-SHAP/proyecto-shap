@@ -13,7 +13,12 @@ Para lanzar Jupiter Notebook en Docker se puede usar el siguiente comando:
 $ docker run -it -p 8888:8888 -v "${PWD}":/home/jovyan/work --name jupyter jupyter/scipy-notebook
 ~~~
 
-Para conectarnos a la shell del contenedor podemos usar el siguiente comando:
+Para lanzar el contenedor nuevamente en modo interactivo se puede usar el siguiente comando:
+~~~bash
+$ docker start -i jupyter
+~~~
+
+Para conectarnos a la shell del contenedor (por ejemplo para instalar mas cosas) podemos usar el siguiente comando:
 ~~~bash
 $ docker exec -it jupyter bash
 ~~~
