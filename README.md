@@ -8,8 +8,14 @@ Proyecto para la asignatura de Introducción de Inteligencia Artificial 2023-1 d
 
 ## Jupyer Notebook en Docker
 
+Para lanzar Jupiter Notebook en Docker se puede usar el siguiente comando:
 ~~~bash
-$ docker run -it -p 8888:8888 -v "${PWD}":/home/jovyan/work jupyter/scipy-notebook
+$ docker run -it -p 8888:8888 -v "${PWD}":/home/jovyan/work --name jupyter jupyter/scipy-notebook
+~~~
+
+Para conectarnos a la shell del contenedor podemos usar el siguiente comando:
+~~~bash
+$ docker exec -it jupyter bash
 ~~~
 
 ## Referencias
