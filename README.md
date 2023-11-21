@@ -6,6 +6,15 @@ Proyecto para la asignatura de Introducción de Inteligencia Artificial 2023-1 d
 * Mateo Alejandro Diaz Munoz <maadiazmu@unal.edu.co>
 * Fredy Andres Rosero Cristancho <faroseroc@unal.edu.co>
 
+
+## Contenido
+* Explicación de valores de Shapley
+* Explicador del modelo lineal
+  * Dataset
+  * Modelo
+* 
+* 
+
 ## Jupyer Notebook en Docker
 
 Para lanzar Jupiter Notebook en Docker se puede usar el siguiente comando:
